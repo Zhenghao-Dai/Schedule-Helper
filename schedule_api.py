@@ -12,7 +12,10 @@ class schedule_api:
     #return remain num  
     def get_course_remain(self,course_id,section_id,_type):
         url = "https://classes.usc.edu/term-20201/course/"+str(course_id)
-        response = requests.get(url)
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                'Chrome/51.0.2704.63 Safari/537.36'}
+
+        response = requests.get(url=url, headers=headers)
         if response.status_code != 200:
             raise Exception("404")
         response.encoding = response.apparent_encoding
