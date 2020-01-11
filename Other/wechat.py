@@ -7,6 +7,7 @@ from wechatpy.exceptions import InvalidSignatureException
 from wechatpy import parse_message
 from wechatpy.replies import TextReply, ImageReply
 import schedule_api as api
+from wechatpy import WeChatClient
 TOKEN = os.getenv('WECHAT_TOKEN', 'lucasdai1998')
 app = Flask(__name__)
 storage = []
@@ -31,6 +32,7 @@ def on_post():
     xml = request.stream.read()
 
     msg = parse_message(xml)
+    print(msg)
     if msg.type == 'text':
         a = api.schedule_api()
         try:
@@ -47,4 +49,7 @@ def on_post():
 
 
 if __name__ == "__main__":
+   
     app.run()
+    
+    

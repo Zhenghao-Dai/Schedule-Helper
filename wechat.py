@@ -34,19 +34,26 @@ def on_post():
     if msg.type == 'text':
         a = api.schedule_api()
         try:
-            #print(msg.content)
-            if 'list ' in msg.content:
-                course_id=my_string.split("list ", 1)[1]
+            msg_content=msg.content.lower()
+            if 'help' in msg_content:
+                result="Enter 'list (course id) to see all section under the course \n Ex: list csci-102 \n \n Enter course to see course availability \n Ex:csci-102"
+                reply = TextReply(content=result, message=msg)
+                xml = reply.render()
+                resp = (xml)
+                return resp
+            if 'list ' in msg_content:
+                course_id=msg_content.split("list ", 1)[1]
+                
                 course_dict = a.get_list_course(course_id)
-                result="Your request of"+ course_id +" has those sections: \n"
+                result="Your request of "+ course_id +" has those sections: \n"
                 for i in course_dict:
                     result+=(course_dict[i]['type'] + " section " + i +" has " + course_dict[i]['remain']+" spots \n")
             else:
-                num = a.get_course_remain(msg.content, 0, "Lecture")
-                result = msg.content+" \n current has " + \
+                num = a.get_course_remain(msg_content, 0, "Lecture")
+                result = msg_content+" \n current has " + \
                     str(num)+" spots available"
         except:
-            result = "Please corect information ex: csci-103"
+            result = "Please enter correct information or type 'help' for help"
 
         reply = TextReply(content=result, message=msg)
         xml = reply.render()
