@@ -11,7 +11,7 @@ class schedule_api:
     #pass 0 if all section work
     #return remain num  
     def get_course_remain(self,course_id,section_id,_type):
-        url = "https://classes.usc.edu/term-20201/course/"+str(course_id)
+        url = "https://classes.usc.edu/term-20203/course/"+str(course_id)
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
                 'Chrome/51.0.2704.63 Safari/537.36'}
 
@@ -66,7 +66,7 @@ class schedule_api:
         return num_total
     
     def get_list_course(self,course_id):
-        url = "https://classes.usc.edu/term-20201/course/"+str(course_id)
+        url = "https://classes.usc.edu/term-20203/course/"+str(course_id)
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
                 'Chrome/51.0.2704.63 Safari/537.36'}
 
@@ -101,9 +101,3 @@ class schedule_api:
                                     'type': section.string, 'remain': str(num_remain)}
         
         return course_dict
-
-
-
-    
-
-
