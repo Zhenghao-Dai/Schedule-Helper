@@ -76,7 +76,7 @@ def web_post():
     print(type(xml))
     
 @app.route('/ios', methods=['GET'])
-def web_post():
+def ios_get():
     request_json = request.get_json()
     print(request_json)
 
