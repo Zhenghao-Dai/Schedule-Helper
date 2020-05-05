@@ -85,19 +85,50 @@ class schedule_api:
                 
                 for section in child.children:
                     if section.attrs['class'] == ['type']:
-                        
-                        # if the section is colsed
-                        if child.contents[5].attrs['class'] == ['registered']:
-                            if child.contents[5].contents[1].name == 'div':
-                                num_remain = 0
-                                course_dict[child.attrs["data-section-id"]] = {
-                                    'type': section.string, 'remain': str(num_remain)}
-                            else:
-                                remain = child.contents[5].contents[1].split(
-                                    ' of ')
-                                num_remain = int(
-                                    remain[1])-int(remain[0])
-                                course_dict[child.attrs["data-section-id"]] = {
-                                    'type': section.string, 'remain': str(num_remain)}
+                        try:
+                            # if the section is colsed
+                            if child.contents[5].attrs['class'] == ['registered']:
+                                date = child.contents[4].string + " "+ child.contents[3].string
+                                
+                                if child.contents[5].contents[1].name == 'div':
+                                    num_remain = 0
+                                    course_dict[child.attrs["data-section-id"]] = {
+                                        'type': section.string, 'remain': str(num_remain),"time":date}
+                                else:
+                                    remain = child.contents[5].contents[1].split(
+                                        ' of ')
+                                    num_remain = int(
+                                        remain[1])-int(remain[0])
+                                    course_dict[child.attrs["data-section-id"]] = {
+                                        'type': section.string, 'remain': str(num_remain),"time":date}
+
+                        except:
+                            pass
         
         return course_dict
+
+    def get_list_departement_course(self,department):
+        url = "https://classes.usc.edu/term-20203/classes/"+department
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                'Chrome/51.0.2704.63 Safari/537.36'}
+        empty={}
+        response = requests.get(url=url, headers=headers)
+        if response.status_code != 200:
+            raise Exception("404")
+        response.encoding = response.apparent_encoding
+        soup = BeautifulSoup(response.text, "html.parser")
+        test = soup.find("div", {"class": "course-table"})
+        for i in test.children:
+            if i.name == "div":
+                courseID = i.attrs["id"]
+                empty [ courseID ] = self.get_list_course(courseID)
+        return empty
+                
+
+
+
+if __name__ == "__main__":
+    a=schedule_api()
+    print(a.get_list_departement_course("CSCI"))
+    #a.get_list_course("csci-201")
+        
