@@ -75,10 +75,12 @@ def web_post():
     print(xml)
     print(type(xml))
     
-@app.route('/ios', methods=['GET'])
+@app.route('/ios', methods=['POST'])
 def ios_get():
     request_json = request.get_json()
     print(request_json)
+    return jsonify("success")
+
 
 if __name__ == "__main__":
     app.run()
