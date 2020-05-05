@@ -8,16 +8,11 @@ import schedule_api as api
 import time
 
 import json
-'''
+
 SENDER = 'your.schedule.notification@gmail.com'
 SMTP_SERVER = 'smtp.gmail.com'
 USER_ACCOUNT = {'username': 'your.schedule.notification',
-                'password': 'q82070002'}'''
-
-SENDER = 'yourotification@163.com'
-SMTP_SERVER = 'smtp.163.com'
-USER_ACCOUNT = {'username': 'yourotification',
-                'password': 'NLRJIAHHXKFKXLHC'}
+                'password': 'q82070002'}
 SUBJECT = "Open spots"
 
 file_name="suscrible_list.json"
@@ -77,8 +72,7 @@ def send_mail(receivers, text, sender=SENDER, user_account=USER_ACCOUNT, subject
     msg_text = MIMEText(text, 'html', 'utf-8')  # 邮件正文
     msg_root.attach(msg_text)  # attach邮件正文内容
 
-    #smtp = smtplib.SMTP('smtp.gmail.com', 587)
-    smtp = smtplib.SMTP('smtp.163.com', 25)
+    smtp = smtplib.SMTP('smtp.gmail.com', 587)
     smtp.ehlo()
     smtp.starttls()
     smtp.login(user_account['username'], user_account['password'])
@@ -86,7 +80,6 @@ def send_mail(receivers, text, sender=SENDER, user_account=USER_ACCOUNT, subject
 
 if __name__ == "__main__":
     print(time.localtime(time.time()).tm_hour)
-    send_mail("827142908@qq.com","You have section 31646 opened")
     while True:
         if time.localtime(time.time()).tm_hour >8:
             poll_spot()
