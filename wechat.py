@@ -78,7 +78,7 @@ def web_post():
 @app.route('/ios', methods=['POST'])
 def ios_get():
     request_json = request.get_json()
-    print(request_json["course"])
+    add(request_json["course"],request_json["email"])
     return jsonify("success")
 
 
